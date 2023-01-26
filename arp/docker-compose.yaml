@@ -2,6 +2,7 @@ version: '3.9'
 services:
   tmux:
     image: ${BASE:-cyd}-common
+    build: ../common
     working_dir: /app/arp
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -15,6 +16,7 @@ services:
   
   alice:
     image: ${BASE:-cyd}-common
+    build: ../common
     tty: true
     stdin_open: true
     hostname: alice
@@ -24,6 +26,7 @@ services:
 
   bob:
     image: ${BASE:-cyd}-common
+    build: ../common
     tty: true
     stdin_open: true
     hostname: bob
@@ -33,6 +36,7 @@ services:
 
   mitm:
     image: ${BASE:-cyd}-kali
+    build: ../kali
     tty: true
     stdin_open: true
     hostname: mitm
