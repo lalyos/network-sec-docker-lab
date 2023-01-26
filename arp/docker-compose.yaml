@@ -1,0 +1,48 @@
+version: '3.9'
+services:
+  tmux:
+    image: ${BASE:-cyd}-common
+    working_dir: /app/arp
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/app/arp
+    tty: true
+    stdin_open: true
+    hostname: tmux
+    networks:
+      arp:
+        ipv4_address: 10.5.0.99
+  
+  alice:
+    image: ${BASE:-cyd}-common
+    tty: true
+    stdin_open: true
+    hostname: alice
+    networks:
+      arp:
+        ipv4_address: 10.5.0.2
+
+  bob:
+    image: ${BASE:-cyd}-common
+    tty: true
+    stdin_open: true
+    hostname: bob
+    networks:
+      arp:
+        ipv4_address: 10.5.0.3
+
+  mitm:
+    image: ${BASE:-cyd}-kali
+    tty: true
+    stdin_open: true
+    hostname: mitm
+    networks:
+      arp:
+        ipv4_address: 10.5.0.4
+
+networks:
+  arp:
+    ipam:
+      config:
+      - subnet: 10.5.0.0/16
+      
