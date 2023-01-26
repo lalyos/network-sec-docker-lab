@@ -34,7 +34,7 @@ demo() {
   run "ping -W 1 -c 1 10.5.0.2 "
 
   pane=$tmux
-  run "# start sumrf containers ..."
+  run "# start smurf containers ..."
   run "# type: docker compose up flood"
 }
 
