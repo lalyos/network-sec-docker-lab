@@ -4,7 +4,8 @@ RUN apk add \
   bash \
   cmd:dig \
   tmux \
-  docker-cli
+  docker-cli \
+  tcpdump
 
 ADD https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-linux-x86_64 /root/.docker/cli-plugins/docker-compose
 RUN chmod +x /root/.docker/cli-plugins/docker-compose
