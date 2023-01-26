@@ -2,10 +2,10 @@
 
 setup() {
   local prj=arp
-  tmux new-session -ds demo "docker exec -it ${prj}-alice-1 bash"
-  tmux split-window -dt 0 "docker exec -it ${prj}-bob-1 bash"
-  tmux split-window -dht 0 "docker exec -it ${prj}-mitm-1 bash"
-  tmux split-window -dht 2 "docker exec -it ${prj}-mitm-1 bash"
+  tmux new-session -ds demo "docker attach ${prj}-alice-1"
+  tmux split-window -dt 0 "docker attach ${prj}-bob-1"
+  tmux split-window -dht 0 "docker attach ${prj}-mitm-1"
+  tmux split-window -dht 2 "docker attach ${prj}-mitm-1"
 }
 
 setup
