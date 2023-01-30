@@ -1,29 +1,16 @@
 #!/usr/bin/env bash
 
-: ${SLEEP:=0.07}
-
-run() {
-  #declare pane=$1 ; shift
-  : ${pane:? required}
-
-  msg="$*"
-  for (( i=0; i<${#msg}; i++ )); do
-    sleep ${SLEEP:-0.07}
-    tmux send-keys -t ${pane} "${msg:$i:1}"
-  done
-  tmux send-keys -t ${pane} ENTER
-}
+source common.sh
 
 setup() {
-  local prj=arp
-  tmux kill-session -t demo 2>/dev/null || true
-  tmux new-session -ds demo "docker exec -it ${prj}-alice-1 bash"
-  tmux split-window -dt 0 "docker exec -it ${prj}-bob-1 bash"
-  tmux split-window -dht 0 "docker exec -it ${prj}-mitm-1 bash"
-  tmux split-window -dht 2 "docker exec -it ${prj}-mitm-1 bash"
+  tmux new-session -ds demo "docker attach ${composePrj}-alice-1"
+  tmux split-window -dt 0 "docker attach ${composePrj}-bob-1"
+  tmux split-window -dht 0 "docker attach ${composePrj}-mitm-1"
+  # if container is reused we need a new process (note: this isnt visiblle in logs)
+  tmux split-window -dht 2 "docker exec -it ${composePrj}-mitm-1 bash"
 }
 
-demo() {
+demo-steps() {
   alice=0
   bob=2
   poison=1
@@ -80,7 +67,4 @@ demo() {
 
 }
 
-setup
-demo &
-tmux attach
-
+main "$@"

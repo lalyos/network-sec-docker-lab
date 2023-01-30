@@ -2,29 +2,46 @@
 
 In this exercise we will demostrate how a bad actor can steal the IP address of a victim.
 
-## Setup
+## Interactive Session
 
 startup session:
 
 ```
-docker compose up -d
+make run
+```
+starts all containers and attaches to a preconfigured tmux session (running in a comtainer)
+
+## Exit from session
+
+To leave the interactive tmux session yoiu have to **detach**:
+- `CTRL-b d` : control-b followed by a "d" (without ctrl)
+
+## Clean up
+
+Still in the same directory you can:
+```
+make down
+```
+It will stop containers belonging to the actual docker-compose.yaml
+
+Or if you have other containers running from a previous example
+```
+make nuke
 ```
 
 ## Demo
 
 ```
-docker compose exec tmux ./demo.sh
+make demo
 ```
 
-## Re-run the demo
+## Building images
 
-While developing the demo.sh script, you might want to re-run the whole script.
-You have to:
-- restart the *driver* container
-- run the demo script in the new container
+Normally you don't need to run this manually ...
+
+Docker images are built automatically if missing. But if you make changes to Dockerfiles
+you can rebuild images by
 
 ```
-docker compose restart tmux -t 0 && docker exec -e SLEEP=0.01 -it arp-tmux-1 ./demo.sh
+make build
 ```
-
-With the `SLEEP` env var you can controll the fake typing speed (default is 0.07 sec)
