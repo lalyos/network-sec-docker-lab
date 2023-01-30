@@ -16,6 +16,7 @@ run() {
 
 setup() {
   local prj=arp
+  tmux kill-session -t demo 2>/dev/null || true
   tmux new-session -ds demo "docker exec -it ${prj}-alice-1 bash"
   tmux split-window -dt 0 "docker exec -it ${prj}-bob-1 bash"
   tmux split-window -dht 0 "docker exec -it ${prj}-mitm-1 bash"
